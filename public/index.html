@@ -39,7 +39,6 @@
         document.getElementById("login").style.display = "none";
         document.getElementById("chat").style.display = "block";
         document.getElementById("username").innerText = userId;
-
         // Kết nối Socket.io
         socket = io("http://localhost:443");
         socket.emit("join", userId);
