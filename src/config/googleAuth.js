@@ -10,7 +10,7 @@ async function verifyGoogleToken(idToken) {
     });
 
     const payload = ticket.getPayload();
-    return payload; // Chứa thông tin user (email, name, picture, ...)
+    return payload;
   } catch (error) {
     console.error("Google token verification failed:", error);
     return null;
