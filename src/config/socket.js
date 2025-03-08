@@ -52,4 +52,4 @@ const initSocket = (server) => {
   });
 };
 
-module.exports = { initSocket, getIo: () => io };
+module.exports = { initSocket, getIo: () => io, users };

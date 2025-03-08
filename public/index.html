@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App (Socket.io)</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  </head>
+  <body>
+    <h2>Chat App</h2>
+
+    <!-- Form nhập ID để tham gia -->
+    <div id="login">
+      <label>Nhập User ID của bạn:</label>
+      <input type="text" id="userId" placeholder="Nhập ID của bạn..." />
+      <button onclick="joinChat()">Tham gia</button>
+    </div>
+
+    <!-- Giao diện chat -->
+    <div id="chat" style="display: none">
+      <h3>Xin chào, <span id="username"></span></h3>
+      <label>Người nhận:</label>
+      <input type="text" id="receiverId" placeholder="Nhập ID người nhận" />
+      <textarea id="message" placeholder="Nhập tin nhắn..."></textarea>
+      <button onclick="sendMessage()">Gửi</button>
+      <h3>Tin nhắn:</h3>
+      <div id="messages"></div>
+    </div>
+
+    <script>
+      let socket;
+      let userId;
+
+      function joinChat() {
+        userId = document.getElementById("userId").value.trim();
+        if (!userId) return alert("Vui lòng nhập User ID của bạn!");
+
+        // Hiển thị chat UI
+        document.getElementById("login").style.display = "none";
+        document.getElementById("chat").style.display = "block";
+        document.getElementById("username").innerText = userId;
+
+        // Kết nối Socket.io
+        socket = io("http://localhost:4040");
+        socket.emit("join", userId);
+
+        // Lắng nghe tin nhắn đến
+        socket.on("receiveMessage", (msg) => {
+          document.getElementById(
+            "messages"
+          ).innerHTML += `<p><b>${msg.senderId}:</b> ${msg.message}</p>`;
+        });
+      }
+
+      function sendMessage() {
+        const receiverId = document.getElementById("receiverId").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!receiverId || !message)
+          return alert("Vui lòng nhập đầy đủ thông tin!");
+
+        // Gửi tin nhắn qua socket
+        socket.emit("sendMessage", { senderId: userId, receiverId, message });
+
+        // Hiển thị tin nhắn của mình
+        document.getElementById(
+          "messages"
+        ).innerHTML += `<p><b>Bạn:</b> ${message}</p>`;
+      }
+    </script>
+  </body>
+</html>

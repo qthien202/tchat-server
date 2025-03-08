@@ -1,4 +1,4 @@
-const { getIo } = require("../config/socket");
+const { getIo, users } = require("../config/socket"); // Import users từ socket
 const Message = require("../models/message");
 
 const sendMessage = async (req, res) => {
@@ -15,7 +15,7 @@ const sendMessage = async (req, res) => {
 
     // Gửi tin nhắn qua WebSocket nếu receiver đang online
     const io = getIo(); // Lấy io từ socket module
-    const receiverSocketId = users[receiverId];
+    const receiverSocketId = users[receiverId]; // Lấy socketId của người nhận
     if (receiverSocketId) {
       io.to(receiverSocketId).emit("receiveMessage", newMessage);
     }

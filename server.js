@@ -18,6 +18,7 @@ const server = http.createServer(app); // Server chạy cả API và WebSocket
 app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
+app.use(express.static("public"));
 
 // Kết nối MongoDB
 mongoose
