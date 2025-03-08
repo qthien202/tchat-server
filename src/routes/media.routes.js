@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const mediaController = require("../controllers/media.controller");
-
+const authMiddleware = require("../middlewares/auth.middleware");
 const router = express.Router();
 
 // Cấu hình multer để xử lý file
@@ -9,6 +9,11 @@ const storage = multer.memoryStorage(); // Sử dụng memoryStorage để lưu 
 const upload = multer({ storage: storage });
 
 // Route để upload media (bao gồm ảnh, video, tài liệu)
-router.post("/upload", upload.single("media"), mediaController.uploadMedia);
+router.post(
+  "/upload",
+  authMiddleware,
+  upload.single("media"),
+  mediaController.uploadMedia
+);
 
 module.exports = router;

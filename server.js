@@ -10,6 +10,8 @@ const { initSocket } = require("./src/config/socket");
 const authRoutes = require("./src/routes/auth.routes");
 const chatRoutes = require("./src/routes/chat.routes");
 const mediaRoutes = require("./src/routes/media.routes");
+const userRoutes = require("./src/routes/user.routes");
+const friendRoutes = require("./src/routes/friend.routes");
 
 const app = express();
 const server = http.createServer(app); // Server chạy cả API và WebSocket
@@ -30,6 +32,8 @@ mongoose
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/media", mediaRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/friend", friendRoutes);
 
 // Khởi tạo WebSocket
 initSocket(server);
