@@ -2,7 +2,7 @@ name: Deploy Tchat Server
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   web-deploy:
     name: Deploy
