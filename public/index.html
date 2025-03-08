@@ -41,7 +41,7 @@
         document.getElementById("username").innerText = userId;
 
         // Kết nối Socket.io
-        socket = io("http://localhost:4040");
+        socket = io("http://localhost:443");
         socket.emit("join", userId);
 
         // Lắng nghe tin nhắn đến
