@@ -39,5 +39,5 @@ app.use("/api/friend", friendRoutes);
 initSocket(server);
 
 // Khởi động server
-const PORT = process.env.PORT || 4040;
+const PORT = process.env.PORT || 443;
 server.listen(PORT, () => console.log(`🚀 Server is running on port ${PORT}`));
