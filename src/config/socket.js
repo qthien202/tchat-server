@@ -11,6 +11,17 @@ const initSocket = (server) => {
     },
   });
 
+  // io.use((socket, next) => {
+  //   const token = socket.handshake.auth?.token || socket.handshake.query?.token;
+  //   if (!token) return next(new Error("Unauthorized"));
+
+  //   const decoded = verifyToken(token);
+  //   if (!decoded) return next(new Error("Invalid token"));
+
+  //   socket.user = decoded; // Lưu thông tin user vào socket
+  //   next();
+  // });
+
   io.on("connection", (socket) => {
     console.log(`⚡ User connected: ${socket.id}`);
 
