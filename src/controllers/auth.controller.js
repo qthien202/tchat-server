@@ -45,11 +45,12 @@ exports.googleAuthCallback = (req, res, next) => {
 
 exports.getUserInfo = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id); // Lấy ID từ middleware
+    const user = await User.findById(req.user.userId); // Lấy ID từ middleware
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({
       userId: user._id,
+      googleId: user.googleId,
       name: user.name,
       email: user.email,
       picture: user.picture,
