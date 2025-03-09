@@ -1,6 +1,6 @@
 const passport = require("passport");
 const { generateToken } = require("../utils/jwt");
-
+const User = require("../models/user.model");
 exports.googleAuth = passport.authenticate("google", {
   scope: ["profile", "email"],
 });
@@ -42,8 +42,6 @@ exports.googleAuthCallback = (req, res, next) => {
     }
   )(req, res, next);
 };
-
-const User = require("../models/User");
 
 exports.getUserInfo = async (req, res) => {
   try {
