@@ -32,10 +32,12 @@ exports.googleAuthCallback = (req, res, next) => {
     "google",
     { failureRedirect: "/login" },
     (err, user) => {
+      console.log("> user", user);
       if (err || !user)
         return res.redirect("http://localhost:3001/auth_failed");
 
-      const token = generateToken(user); // Tạo JWT token
+      const { token } = user; // 🟢 Lấy token từ passport.use
+      console.log("TokenUrl:", token);
 
       // Redirect về Flutter với token trong URL
       res.redirect(`http://localhost:3001/auth_success?token=${token}`);
@@ -46,14 +48,18 @@ exports.googleAuthCallback = (req, res, next) => {
 exports.getUserInfo = async (req, res) => {
   try {
     const user = await User.findById(req.user.userId); // Lấy ID từ middleware
+    console.log("User info:", req.user);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({
-      userId: user._id,
-      googleId: user.googleId,
-      name: user.name,
-      email: user.email,
-      picture: user.picture,
+      message: "Login successfully",
+      data: {
+        userId: user._id,
+        googleId: user.googleId,
+        name: user.name,
+        email: user.email,
+        picture: user.picture,
+      },
     });
   } catch (error) {
     console.error("Error fetching user info:", error);
