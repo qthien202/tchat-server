@@ -52,14 +52,11 @@ exports.getUserInfo = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.json({
-      message: "Login successfully",
-      data: {
-        userId: user._id,
-        googleId: user.googleId,
-        name: user.name,
-        email: user.email,
-        picture: user.picture,
-      },
+      userId: user._id,
+      googleId: user.googleId,
+      name: user.name,
+      email: user.email,
+      picture: user.picture,
     });
   } catch (error) {
     console.error("Error fetching user info:", error);
